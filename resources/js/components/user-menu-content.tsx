@@ -3,7 +3,7 @@ import { UserInfo } from '@/components/user-info';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { type User } from '@/types';
 import { Link, router } from '@inertiajs/react';
-import { LogOut, Settings } from 'lucide-react';
+import { LogOut, Settings, ShieldAlert } from 'lucide-react';
 
 interface UserMenuContentProps {
     user: User;
@@ -24,6 +24,15 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                     <UserInfo user={user} showEmail={true} />
                 </div>
             </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                    <Link className="block w-full" href={route('user.index')} as="button" prefetch onClick={cleanup}>
+                        <ShieldAlert className="mr-2" />
+                        Admistrator
+                    </Link>
+                </DropdownMenuItem>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>

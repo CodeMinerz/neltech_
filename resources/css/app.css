@@ -162,11 +162,11 @@
         }
 
         50% {
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
         }
 
         100% {
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
         }
     }
 }
@@ -391,7 +391,7 @@
 }
 
 @utility glow {
-    box-shadow: 0 0 15px rgba(167, 139, 250, 0.5);
+    box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
     animation: glow-pulse 3s ease-in-out infinite;
 }
 
@@ -425,6 +425,143 @@
 }
 
 
+/* === LUXURIOUS BUTTON DESIGN SYSTEM === */
+
+@utility btn-luxury {
+  @apply p-2 rounded-full text-sm font-medium relative overflow-hidden cursor-pointer transition-all duration-300 ease-in-out transform ;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 2px 18px rgba(0, 0, 200, 0.1);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+  border: none;
+  outline: none;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-sans);
+}
+
+@utility btn-luxury-default {
+  @apply btn-luxury text-white;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+}
+
+
+
+
+@utility luxury-button-default-hover {
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
+    transform: translateY(-2px);
+    
+    &:hover {
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+    }
+    
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+
+@utility luxury-button-add-hover {
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
+    transform: translateY(-2px);
+    
+    &:hover {
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #96c93d 0%, #00b09b 100%);
+    }
+    
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+
+
+
+@utility btn-luxury-add {
+  @apply btn-luxury text-white hover:luxury-button-add-hover;
+  background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+  box-shadow: 0 2px 8px rgba(0, 176, 155, 0.3);
+}
+
+
+@utility btn-luxury-delete {
+  @apply btn-luxury text-white;
+  background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+  box-shadow: 0 2px 8px rgba(255, 65, 108, 0.3);
+}
+
+
+
+@utility luxury-button-delete-hover {
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
+    transform: translateY(-2px);
+    
+    &:hover {
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
+    }
+    
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+
+@utility btn-luxury-update {
+  @apply btn-luxury text-white;
+  background: linear-gradient(135deg, #4A00E0 0%, #8E2DE2 100%);
+  box-shadow: 0 2px 8px rgba(142, 45, 226, 0.3);
+}
+
+@utility btn-luxury-view {
+  @apply btn-luxury text-gray-800 dark:text-gray-200;
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  box-shadow: 0 2px 8px rgba(246, 211, 101, 0.3);
+}
+
+@utility btn-luxury-sm {
+  @apply px-4 py-2 text-sm;
+}
+
+@utility btn-luxury-lg {
+  @apply px-8 py-4 text-lg;
+}
+
+@utility btn-luxury-rounded {
+  @apply rounded-full;
+}
+
+@utility btn-luxury-outline {
+  @apply btn-luxury bg-transparent border-2 border-current;
+}
+
+@utility btn-luxury-disabled {
+  @apply cursor-not-allowed opacity-50;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+@utility btn-luxury-group {
+  @apply flex items-center gap-2;
+}
+
+@utility btn-luxury-icon {
+  @apply flex items-center justify-center gap-2;
+}
+
+/* === END LUXURIOUS BUTTON DESIGN SYSTEM === */
 #root {
     max-width: 100%;
     margin: 0 auto;

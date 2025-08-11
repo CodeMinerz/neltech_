@@ -29,8 +29,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
 
+        $request->authenticate();
+      
+        // Check if the user is active
+
+        $user = Auth::user();
+
+        if (!$user || $user->active) {
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Your account is inactive. Please contact support.');
+        }
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard', absolute: false));
@@ -46,6 +55,13 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
+    }
+    protected function authenticated($user)
+    {
+        if (!$user->active) {
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Your account is inactive. Please contact support.');
+        }
     }
 }

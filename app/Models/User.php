@@ -26,6 +26,7 @@ class User extends Authenticatable
             'l_name',
             'phone_no',
             'b_date',
+            'active',
     ];
 
 
@@ -52,4 +53,29 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    protected function getFullnameAttribute(): string
+    {
+        return $this->f_name . ' ' . $this->l_name;
+    }
+    protected function setLNameAttribute($value): void
+    {
+        $this->attributes['l_name'] = $value;
+    }
+    protected function setFNameAttribute($value): void
+    {
+        $this->attributes['f_name'] = $value;
+    }
+    public static function searchable(): array
+    {
+        return [
+            'username',
+            'fullname',
+        ];
+    }
+    public function toggleActive(): bool
+    {
+        return $this->active = !$this->active ?? $this->active;
+    }
 }
+
