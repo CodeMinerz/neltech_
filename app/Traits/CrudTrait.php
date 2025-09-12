@@ -18,11 +18,10 @@ trait CrudTrait
 
     public function index(Request $request)
     {
-
-        
+        $searchableColumns = method_exists($this->model, 'searchable') ? $this->model::searchable() : ['name'];
         $query = $this->model::query()
-            ->when($request->has('search'), function ($query) use ($request) {
-                $searchableColumns = method_exists($this->model, 'searchable') ? $this->model::searchable() : ['name']; // Customize searchable columns
+            ->when($request->has('search'), function ($query) use ($request,$searchableColumns) {
+                 // Customize searchable columns
                 foreach ($searchableColumns as $column) {
                     $query->orWhere($column, 'like', '%' . $request->search . '%');
                 }
@@ -32,23 +31,20 @@ trait CrudTrait
             ->paginate(10);
         return Inertia::render($this->inertiaView . '/index', [
             'record' => $query,
-            'filters' => $request->only('search'),
+            'filters' => [$request->only('search'), 'placeholder' => $searchableColumns],
         ]);
     }
-
     public function create()
     {
         $additionalProps = method_exists($this, 'getAdditionalCreateProps') ? $this->getAdditionalCreateProps() : [];
-        return Inertia::render($this->inertiaView . '/form', $additionalProps);
+        return Inertia::render($this->inertiaView . '/form', array_merge(['rootPrefix' => $this->routePrefix] , $additionalProps));
     }
-
     public function store(Request $request)
     {
-        $request->validate((new $this->formRequest())->rules());
-
+        $validated = $request->validate((new $this->formRequest())->rules());
         DB::beginTransaction();
         try {
-            $record = $this->model::create($request->all());
+            $record = $this->model::create($validated );
             $additionalProps = method_exists($this, 'getAdditionalStoreProps') ? $this->getAdditionalStoreProps($request, $record) : [];
 
             DB::commit();
@@ -64,24 +60,23 @@ trait CrudTrait
     {
         $record = $this->model::findOrFail($id);
         $additionalProps = method_exists($this, 'getAdditionalShowProps') ? $this->getAdditionalShowProps($record) : [];
-        return Inertia::render($this->inertiaView . '/form', array_merge(['record' => $record, 'isView' => true], $additionalProps));
+        return Inertia::render($this->inertiaView . '/form', array_merge(['record' => $record, 'isView' => true, 'rootPrefix' => $this->routePrefix], $additionalProps));
     }
 
     public function edit($id)
     {
         $record = $this->model::findOrFail($id);
          $additionalProps = method_exists($this, 'getAdditionalEditProps') ? $this->getAdditionalEditProps($record) : [];
-        return Inertia::render($this->inertiaView . '/form', array_merge(['record' => $record, 'isEdit' => true], $additionalProps));
+        return Inertia::render($this->inertiaView . '/form', array_merge(['record' => $record, 'isEdit' => true, 'rootPrefix' => $this->routePrefix], $additionalProps));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate((new $this->formRequest())->rules());
-
+        $validated = $request->validate((new $this->formRequest())->rules());
         DB::beginTransaction();
         try {
             $record = $this->model::findOrFail($id);
-            $record->update($request->all());
+            $record->update($validated);
             $additionalProps = method_exists($this, 'getAdditionalUpdateProps') ? $this->getAdditionalUpdateProps($request,$record) : [];
 
             DB::commit();

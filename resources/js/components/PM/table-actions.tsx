@@ -29,8 +29,8 @@ export function TableActions<T extends { id: any }>({
   setDeleteModal,
   setSelectedRow,
   statusAccessor,
-  statusActiveText = 'Deactivate',
-  statusInactiveText = 'Activate',
+  statusActiveText = 'Enabled',
+  statusInactiveText = 'Disabled',
 }: TableActionsProps<T>) {
   const item = row;
 
@@ -70,20 +70,20 @@ export function TableActions<T extends { id: any }>({
 // resources/js/components/ui/table-status-cell.tsx
 
 interface TableStatusCellProps<T> {
-  isActive: boolean;
+  isActive?: boolean;
   activeText?: string;
   inactiveText?: string;
 }
 
 export function TableStatusCell({
   isActive,
-  activeText = 'ACTIVE',
-  inactiveText = 'DEACTIVATED',
+  activeText = 'Enabled',
+  inactiveText = 'Disabled',
 }: TableStatusCellProps<any>) {
   return (
     <span className={cn(
-      'rounded-md px-4 py-1 cursor-pointer text-bolder text-white ',
-      isActive ? 'bg-green-500 hover:text-black hover:bg-800' : 'bg-rose-500 text-white'
+      'rounded-md px-4 py-1 cursor-pointer text-bolder capitalize ',
+      isActive ? 'bg-green-100 text-green-900 hover:text-black hover:bg-opacity-100' : 'bg-rose-100 text-rose-900 hover:text-black hover:bg-opacity-100'
     )}>
       {isActive ? activeText : inactiveText}
     </span>

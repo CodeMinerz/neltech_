@@ -11,7 +11,7 @@ class UserFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,6 +30,7 @@ class UserFormRequest extends FormRequest
                 'phone_no' => "required|numeric| digits:11",
             ];
 
+            //For Create Form
             if($this->isMethod('post')) {
                 $rules['username'] = [
                     'required',

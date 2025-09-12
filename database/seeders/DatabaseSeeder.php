@@ -8,12 +8,16 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-         User::factory(10)->create();
+        $this->call([
+            RegionSeeder::class,
+            ProvinceSeeder::class,
+            CityMunicipalitySeeder::class,
+            BarangaySeeder::class,
+        ]);
+
+        User::factory(10)->create();
 
         User::factory()->create([
             'username' => 'testuser',
@@ -22,7 +26,6 @@ class DatabaseSeeder extends Seeder
             'f_name' => 'Test',
             'l_name' => 'User',
             'phone_no' => '1234567890',
-            'b_date' => '2000-01-01',
         ]);
     }
 }

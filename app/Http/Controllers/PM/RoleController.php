@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use  Spatie\Permission\Models\Permission;
-use App\Http\Requests\RoleFormRequest;
+use App\Http\Requests\PM\RoleFormRequest;
 use Inertia\Inertia;
 use App\Traits\CrudTrait;
 use App\Traits\ActiveTrait;

@@ -496,7 +496,7 @@
 
 
 @utility btn-luxury-delete {
-  @apply btn-luxury text-white;
+  @apply btn-luxury text-white hover:luxury-button-delete-hover;
   background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
   box-shadow: 0 2px 8px rgba(255, 65, 108, 0.3);
 }

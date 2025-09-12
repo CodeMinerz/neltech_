@@ -32,6 +32,7 @@ type UserForm = {
 
 export default function UserForm({ ...props }) {
 
+    console.log(props)
 
     const { record, isView, isEdit, roles, userRoles } = props;
 

@@ -4,6 +4,9 @@ export type Roles = {
     id: string
     name: string
     guard_name: string
+    permissions: [
+        name: any
+    ]
     disabled: boolean;
 }
 
@@ -25,4 +28,3 @@ export type Props = {
     }
 
 }
-

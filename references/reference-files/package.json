@@ -1,0 +1,23 @@
+{
+  "name": "reference-files",
+  "version": "1.0.0",
+  "description": "A sample project demonstrating the use of utility functions.",
+  "main": "src/example.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.0.0",
+    "jest": "^26.0.0",
+    "@types/jest": "^26.0.0",
+    "@types/node": "^14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/reference-files.git"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}

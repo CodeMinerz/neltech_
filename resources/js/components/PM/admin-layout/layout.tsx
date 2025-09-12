@@ -2,35 +2,36 @@ import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+import DeleteUserModal from '@/pages/PM/users/delete';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BrickWall, CrownIcon, UserCog2, UsersRoundIcon } from 'lucide-react';
-import { type PropsWithChildren } from 'react'; 
+import { useState, type PropsWithChildren } from 'react'; 
 
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Manage Users',
         href: '/user',
-        icon: UserCog2,
     },
     {
         title: 'Manage Roles',
         href: '/role',
-        icon: CrownIcon,
     },
      {
-        title: 'Manage Group',
+        title: 'Manage Groups',
         href: '/group',
-        icon: UsersRoundIcon,
+    },
+    {
+        title: 'Manage Companies',
+        href: '/company',
     },
 ];
 
-export default function AdminLayout({ children }: PropsWithChildren) {
+export default function AdminLayout({ children, ...props }: PropsWithChildren) {
     // When server-side rendering, we only render the layout on the client...
     if (typeof window === 'undefined') {
         return null;
     }
-
     const currentPath = window.location.pathname;
 
     return (

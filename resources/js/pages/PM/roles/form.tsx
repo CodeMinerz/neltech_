@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/PM/toast';
 import useCheckbox from '@/hooks/use-checkbox';
 
-export default function Form({ ...props }) {
+export default function RoleForm({ ...props }) {
 
   const { record: role, isView, isEdit, permissions, rolePermissions } = props;
   const title = `${isView ? 'View' : (isEdit ? 'Edit' : 'Add')} | Role`

@@ -69,8 +69,7 @@ class User extends Authenticatable
     public static function searchable(): array
     {
         return [
-            'username',
-            'fullname',
+            'username'
         ];
     }
     public function toggleActive(): bool

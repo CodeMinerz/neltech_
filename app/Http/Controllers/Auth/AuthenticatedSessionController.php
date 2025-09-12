@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        if (!$user || $user->active) {
+        if (!$user->active) {
             Auth::logout();
             return redirect()->route('login')->with('error', 'Your account is inactive. Please contact support.');
         }

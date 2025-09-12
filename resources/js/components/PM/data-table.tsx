@@ -39,15 +39,9 @@ import { LucidePlusCircle, Search, UserPlus } from "lucide-react"
 interface DataTableProps<TData, TValue> {
 
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-  searchBar: string,
+  data?: TData[]
   rootRoute: string
-  pagination: any[]
-  total: number
-  from: number
-  to: number
-  current_page: number
-  filters: { search: string }
+  filters: { search: string, placeholder?: string }
 }
 
 
@@ -55,23 +49,29 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  searchBar,
   rootRoute,
-  pagination = [] ,
-  total = 0,
-  from = 0,
-  to = 0,
-  current_page= 0,
   filters
-
+  
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const prevPage = current_page - 1;
-  const nextViewPage = current_page + 2
-  const lastPage = pagination.length - 1
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+  const { record: meta } = usePage<{ 
+    record: {
+      current_page: number;
+      links: [{
+        url: string
+        active: number,
+        label: string,
+      }];
+      from: number;
+      to: number;
+      total: number
+    }
+  }>().props
+
+  const prevPage = meta.current_page - 1;
+  const nextViewPage = meta.current_page + 2
+  const lastPage = meta.links.length - 1
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
@@ -101,13 +101,13 @@ export function DataTable<TData, TValue>({
       const urlParams = new URLSearchParams(new URL(url).search);
       const page = urlParams.get('page');
 
-      // Construct the Inertia visit with the page number and any existing filters
       const visitOptions = {
         preserveState: true,
         preserveScroll: true,
         data: {
           page: page,
           search: filters?.search || '',
+          placeholder: filters?.placeholder || 'name'
         },
       };
       router.visit(url, visitOptions);
@@ -149,7 +149,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4">
         {/* Search Bar */}
         <Input
-          placeholder={`Filter the ${searchBar}`}
+          placeholder={`Filter the ${filters?.placeholder}`}
           value={searchTerm}
           onChange={(event) => {
              setSearchTerm(event.target.value);
@@ -251,24 +251,24 @@ export function DataTable<TData, TValue>({
 
       <div className="flex items-center justify-between space-x-2 py-4">
         <div className="text-sm text-gray-500">
-          Showing {from} to {to} of {total} results
+          Showing {meta.from} to {meta.to} of {meta.total} results
         </div>
 
         <div className="space-x-2 flex flex-wrap justify-center">
-          {pagination.length > 3 ? (
+          {meta.links.length > 3 ? (
             <>
               <Button
                 variant="outline"
                 size="sm"
-                disabled={pagination[0].url === null}
-                onClick={() => handlePageChange(pagination[0].url)}
-                className={pagination[0].active ? 'bg-blue-500 text-white' : ''}
+                disabled={meta.links[0].url === null}
+                onClick={() => handlePageChange(meta.links[0].url)}
+                className={meta.links[0].active ? 'bg-blue-500 text-white' : ''}
               >
                 Previous
               </Button>
               {
 
-                pagination.map((link, key) => {
+                meta.links.map((link, key) => {
 
                   // Display the first 5 buttons and the active button
                   if (key >= prevPage && key <= nextViewPage && key !== 0 && key !== lastPage) {
@@ -290,15 +290,15 @@ export function DataTable<TData, TValue>({
               <Button
                 variant="outline"
                 size="sm"
-                disabled={pagination[lastPage].url === null}
-                onClick={() => handlePageChange(pagination[lastPage].url)}
-                className={pagination[lastPage].active ? 'bg-blue-500 text-white' : ''}
+                disabled={meta.links[lastPage].url === null}
+                onClick={() => handlePageChange(meta.links[lastPage].url)}
+                className={meta.links[lastPage].active ? 'bg-blue-500 text-white' : ''}
               >
                 Next
               </Button>
             </>
           ) : (
-            pagination.map((link, key) => (
+            meta.links.map((link, key) => (
               <Button
                 key={key}
                 variant="outline"
