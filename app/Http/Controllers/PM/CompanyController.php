@@ -24,6 +24,6 @@ class CompanyController extends Controller
     }
 
     public function getAdditionalCreateProps(){
-        return ['groups' =>Group::all()];
+        return ['groups' => Group::all()];
     }
 }

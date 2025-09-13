@@ -6,11 +6,11 @@ import { FormLayout } from '@/components/PM/form-layout';
 import { useForm } from '@/hooks/use-form';
 import { Button } from '@/components/ui/button';
 import { LoaderCircle } from 'lucide-react';
+
 export default function CompanyForm({  ...props }) {
   const { record: company, isView, isEdit, rootPrefix, groups } = props;  
+  const title = `${isView ? 'View' : (isEdit ? 'Edit' : 'Add')} | Company`;
 
-  console.log(groups);
-  const title = `${isView ? 'View' : (isEdit ? 'Edit' : 'Add')} | Company`
   const { data, setData, post, put, processing, errors, reset } = useForm({
     initialData : {
       id: company?.id || '',
@@ -35,6 +35,11 @@ export default function CompanyForm({  ...props }) {
       });
     }
   };
+  useEffect(() => {
+    return () => {
+      reset();
+    };
+  } , []);
   
   return (
     <FormLayout rootRoute={rootPrefix} title = {title}>
@@ -82,6 +87,7 @@ export default function CompanyForm({  ...props }) {
               ))}
             </select>
           </div>
+          
           <div className="space-y-2">
             <Label htmlFor="disabled">Status</Label>
             <select
@@ -94,6 +100,24 @@ export default function CompanyForm({  ...props }) {
               <option value="0">Active</option>
               <option value="1">Disabled</option>
             </select>
+          </div>
+          <div className="space-y-2 lg:col-span-2">
+            <section className='font-medium text-lg'>
+              <h1>Other Information</h1>
+              <Label htmlFor="address_line"><h1 className='font-medium'>Address: </h1></Label>
+            </section>
+            <div className="grid lg:grid-cols-3">
+             <select
+                id="region_code"
+                value={data.region_code || ''}
+                onChange={(e) => setData('region_code', e.target.value)}
+                disabled={isView}
+                className="w-full p-2 border rounded mb-2"
+              >
+                <option value="">Select a region</option>
+                {/* Options should be populated dynamically */}
+              </select>
+            </div>
           </div>
         </div>
 

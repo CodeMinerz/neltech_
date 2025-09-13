@@ -44,7 +44,8 @@ trait CrudTrait
         $validated = $request->validate((new $this->formRequest())->rules());
         DB::beginTransaction();
         try {
-            $record = $this->model::create($validated );
+            $record = $this->model::create($validated);
+
             $additionalProps = method_exists($this, 'getAdditionalStoreProps') ? $this->getAdditionalStoreProps($request, $record) : [];
 
             DB::commit();
