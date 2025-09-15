@@ -62,7 +62,3 @@ The source code demonstrates clean structure, API-based architecture, and compon
 ## 📧 nelgieedem.hs@gmail.com
 
 ---
-
-## 📚 Documentation
-
-For detailed setup instructions, API references, and development guidelines, please see [DOCS.md](DOCS.md).
