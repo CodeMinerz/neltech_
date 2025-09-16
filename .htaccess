@@ -1,0 +1,4 @@
+<IfModule mod_rewrite.>
+    RewriteEngine On
+    RewriteRule ^(.*)$ /neltech/public/$1 [L]
+</IfModule>

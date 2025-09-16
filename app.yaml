@@ -1,0 +1,5 @@
+name: neltech
+app_id: da_KGzIxtmUeLZV
+owner: nelgie
+package: '.'
+kind: wasmer.io/App.v0
